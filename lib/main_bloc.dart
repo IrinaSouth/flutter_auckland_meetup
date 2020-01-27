@@ -3,21 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 
-void main() => runApp(BlocProvider<SliderBloc>(
-      creator: (_context, _bag) {
-        return SliderBloc();
-      },
-      child: MyApp(),
-    ));
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<SliderBloc>(context);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Auckland Meetup Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,18 +24,25 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page', bloc: bloc),
+      home: BlocProvider<SliderBloc>(
+        creator: (_context, _bag) {
+          return SliderBloc();
+        },
+        child: MyHomePage(title: 'Flutter Auckland Meetup Demo'),
+      )
+      ,
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   final String title;
-  final SliderBloc bloc;
-  MyHomePage({Key key, this.title, this.bloc}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<SliderBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
