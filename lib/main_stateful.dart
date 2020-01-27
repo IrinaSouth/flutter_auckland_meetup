@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'boxes_array_widget.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -80,38 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    child: Text(displayValue), color: Colors.indigo,),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      padding: EdgeInsets.all(24),
-                      child: Text(displayValue), color: Colors.amber,),
-                  )
-                ],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    child: Text(displayValue), color: Colors.teal,),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      padding: EdgeInsets.all(24),
-                      child: Text(displayValue), color: Colors.redAccent,),
-                  )
-                ],),
-              ],
-            )
+            BoxesArrayWidget(displayValue: displayValue)
           ],
         ),
       ),
