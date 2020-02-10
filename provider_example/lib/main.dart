@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'WidgetKeys.dart';
 import 'coloured_text_box_widget.dart';
+import 'model.dart';
+import 'model.dart';
 
 void main() => runApp(MyApp());
 
@@ -83,39 +85,63 @@ class MyHomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ColouredTextBoxWidget(
-                            key: Key(WidgetKeys.box1),
-                            displayValue: bloc.box1.toString(),
-                            color: Colors.indigo,
+                          Selector<SliderBloc, double>(
+                            selector: (o, n) => n.box1,
+                            builder: (ctx, s, widget) {
+                              return ColouredTextBoxWidget(
+                                key: Key(WidgetKeys.box1),
+                                displayValue:s.toString(),
+                                color: Colors.indigo,
+                              );
+                            },
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ColouredTextBoxWidget(
-                              key: Key(WidgetKeys.box2),
-                              displayValue: bloc.box2.toString(),
-                              color: Colors.amber,
-                            ),
-                          )
+                          Selector<SliderBloc, double>(
+                            selector: (o, n) => n.box2,
+                            builder: (ctx, s, widget) {
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: ColouredTextBoxWidget(
+                                  key: Key(WidgetKeys.box2),
+                                  displayValue: s.toString(),
+                                  color: Colors.amber,
+                                )
+                              );
+                            },
+                          ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          ColouredTextBoxWidget(
-                            key: Key(WidgetKeys.box3),
-                            displayValue: bloc.box3.toString(),
-                            color: Colors.teal,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ColouredTextBoxWidget(
-                              key: Key(WidgetKeys.box4),
-                              displayValue: bloc.box4.toString(),
-                              color: Colors.redAccent,
-                            ),
-                          )
-                        ],
+                      Consumer<SliderBloc>(
+                        builder: (ctx, sb, w) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Selector<SliderBloc, double>(
+                                selector: (o, n) => n.box3,
+                                builder: (ctx, s, widget) {
+                                  return ColouredTextBoxWidget(
+                                    key: Key(WidgetKeys.box3),
+                                    displayValue:s.toString(),
+                                    color: Colors.indigo,
+                                  );
+                                },
+                              ),
+                              Selector<SliderBloc, double>(
+                                selector: (o, n) => n.box4,
+                                builder: (ctx, s, widget) {
+                                  return Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: ColouredTextBoxWidget(
+                                        key: Key(WidgetKeys.box4),
+                                        displayValue: s.toString(),
+                                        color: Colors.amber,
+                                      )
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   )
