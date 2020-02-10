@@ -63,6 +63,19 @@ class MyHomePage extends StatelessWidget {
                       }
                     },
                   ),
+                  Text('Second slider'),
+                  Slider(
+                    key: Key(WidgetKeys.slider2),
+                    min: 0,
+                    max: 10,
+                    divisions: 10,
+                    value: bloc.box3,
+                    onChanged: (value) {
+                      {
+                        bloc.setSecondSliderValue(value);
+                      }
+                    },
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

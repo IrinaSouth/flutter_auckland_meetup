@@ -7,4 +7,6 @@ class WidgetKeys {
   static const boxText = 'box-text';
 
   static const slider = 'slider';
+
+  static const slider2 = 'slider2';
 }

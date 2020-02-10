@@ -15,6 +15,7 @@ class ColouredTextBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("building $displayValue");
     return Container(
       width: 80,
       padding: EdgeInsets.all(24),
