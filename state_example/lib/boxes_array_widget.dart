@@ -3,46 +3,44 @@ import 'package:flutter/material.dart';
 import 'coloured_text_box_widget.dart';
 
 class BoxesArrayWidget extends StatelessWidget {
-  final String displayValue;
+  final double boxDisplayValue;
 
-  const BoxesArrayWidget({Key key, @required this.displayValue})
-      : super(key: key);
+  const BoxesArrayWidget({
+    Key key,
+    this.boxDisplayValue = 0.0,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      direction: Axis.vertical,
+      spacing: 12,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        Wrap(
+          direction: Axis.horizontal,
+          spacing: 12,
           children: <Widget>[
             ColouredTextBoxWidget(
-              displayValue: displayValue,
+              displayValue: boxDisplayValue,
               color: Colors.indigo,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ColouredTextBoxWidget(
-                displayValue: displayValue,
-                color: Colors.amber,
-              ),
+            ColouredTextBoxWidget(
+              displayValue: boxDisplayValue,
+              color: Colors.amber,
             )
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        Wrap(
+          direction: Axis.horizontal,
+          spacing: 12,
           children: <Widget>[
             ColouredTextBoxWidget(
-              displayValue: displayValue,
+              displayValue: boxDisplayValue,
               color: Colors.teal,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ColouredTextBoxWidget(
-                displayValue: displayValue,
-                color: Colors.redAccent,
-              ),
+            ColouredTextBoxWidget(
+              displayValue: boxDisplayValue,
+              color: Colors.redAccent,
             )
           ],
         ),
