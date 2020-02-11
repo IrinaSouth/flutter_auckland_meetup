@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColouredTextBoxWidget extends StatelessWidget {
   final Color color;
-  final String displayValue;
+  final Stream<double> displayValue;
 
 
   const ColouredTextBoxWidget({
@@ -16,7 +16,14 @@ class ColouredTextBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(24),
-      child: Text(displayValue),
+      child: StreamBuilder<double>(
+        stream: displayValue,
+        builder: (context, snapshot) {
+          print("build triggered ${snapshot.data}");
+
+          return snapshot.hasData ? Text(snapshot.data.toString()) : SizedBox.shrink();
+        }
+      ),
       color: color,
     );
   }

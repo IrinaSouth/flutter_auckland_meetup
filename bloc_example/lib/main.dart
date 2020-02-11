@@ -2,6 +2,7 @@ import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
+import 'package:flutter_auckland_feb20/sliders.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +10,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Flutter Auckland Meetup Demo',
       theme: ThemeData(
@@ -22,21 +22,21 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: BlocProvider<SliderBloc>(
         creator: (_context, _bag) {
           return SliderBloc();
         },
         child: MyHomePage(title: 'Flutter Auckland Meetup Demo'),
-      )
-      ,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   final String title;
+
   MyHomePage({Key key, this.title}) : super(key: key);
 
   @override
@@ -50,34 +50,19 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: StreamBuilder<double>(
-            stream: bloc.sliderStream,
-            initialData: 0.0,
-            builder: (context, snapshot) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    'Slider sample app',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                  Slider(
-                    min: 0,
-                    max: 10,
-                    value: snapshot.data,
-                    onChanged: (value) {
-                      {
-                        bloc.addSliderValueToStream(value);
-                      }
-                    },
-                  ),
-                  BoxesArrayWidget(displayValue: snapshot.data.floor().toString(),)
-                ],
-              );
-            }),
-      ),
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text(
+            'Slider sample app',
+            style: Theme.of(context).textTheme.display1,
+          ),
+          SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),),
+          BoxesArrayWidget()
+        ],
+      )),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
