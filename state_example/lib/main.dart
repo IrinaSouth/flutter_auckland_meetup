@@ -26,6 +26,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var value = 5.0;
+  var value2 = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Flexible(child: Text('Slider sample app', style: Theme.of(context).textTheme.display1)),
 
-            // Slider control.
+            // Slider control 1.
             SliderWidget(
               initialValue: value,
               valueChanged: (newValue) {
@@ -47,11 +48,21 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
 
+            // Slider control 2.
+            SliderWidget(
+              initialValue: value,
+              valueChanged: (newValue) {
+                setState(() {
+                  value2 = newValue;
+                });
+              },
+            ),
+
             // Boxes display.
             Expanded(
               flex: 2,
               child: Center(
-                child: BoxesArrayWidget(boxDisplayValue: value),
+                child: BoxesArrayWidget(boxDisplayValue: value, boxDisplayValue2: value2),
               ),
             )
           ],
