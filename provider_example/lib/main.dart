@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/model.dart';
+import 'package:flutter_auckland_feb20/sliders.dart';
 import 'package:provider/provider.dart';
 
 import 'WidgetKeys.dart';
@@ -53,31 +54,9 @@ class MyHomePage extends StatelessWidget {
                     'Slider sample app',
                     style: Theme.of(context).textTheme.display1,
                   ),
-                  Slider(
-                    key: Key(WidgetKeys.slider),
-                    min: 0,
-                    max: 10,
-                    divisions: 10,
-                    value: bloc.box1,
-                    onChanged: (value) {
-                      {
-                        bloc.setSliderValue(value);
-                      }
-                    },
-                  ),
-                  Text('Second slider'),
-                  Slider(
-                    key: Key(WidgetKeys.slider2),
-                    min: 0,
-                    max: 10,
-                    divisions: 10,
-                    value: bloc.box3,
-                    onChanged: (value) {
-                      {
-                        bloc.setSecondSliderValue(value);
-                      }
-                    },
-                  ),
+                  SliderWidget(initialValue: bloc.box1, valueChanged: (v) => bloc.setSliderValue(v),),
+                  Text('Slider2'),
+                  SliderWidget(initialValue: bloc.box3, valueChanged: (v) => bloc.setSecondSliderValue(v),),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

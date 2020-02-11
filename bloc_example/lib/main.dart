@@ -60,6 +60,8 @@ class MyHomePage extends StatelessWidget {
             style: Theme.of(context).textTheme.display1,
           ),
           SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),),
+          Text('Slider2'),
+          SliderWidget(initialValue: bloc.slider2Value, valueChanged: (v) => bloc.addSlider2(v),),
           BoxesArrayWidget()
         ],
       )),
