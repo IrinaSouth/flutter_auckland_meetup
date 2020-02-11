@@ -15,17 +15,22 @@ class MyApp extends StatelessWidget {
 }
 
 /// The application home page.
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   final String title;
 
   MyHomePage({Key key, this.title}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    var sliderValue = 5.0;
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
+class _MyHomePageState extends State<MyHomePage> {
+  var value = 5.0;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(widget.title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,15 +39,19 @@ class MyHomePage extends StatelessWidget {
 
             // Slider control.
             SliderWidget(
-              initialValue: sliderValue,
-              valueChanged: (newValue) => {},
+              initialValue: value,
+              valueChanged: (newValue) {
+                setState(() {
+                  value = newValue;
+                });
+              },
             ),
 
             // Boxes display.
             Expanded(
               flex: 2,
               child: Center(
-                child: BoxesArrayWidget(boxDisplayValue: sliderValue),
+                child: BoxesArrayWidget(boxDisplayValue: value),
               ),
             )
           ],
