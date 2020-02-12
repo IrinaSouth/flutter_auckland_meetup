@@ -7,8 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-  boxTextData(WidgetTester tester, String key) async {
-  }
 
   testWidgets('Main app responds to slider movement', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
