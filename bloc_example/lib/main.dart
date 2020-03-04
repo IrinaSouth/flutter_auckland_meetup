@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 import 'package:flutter_auckland_feb20/sliders.dart';
+
+import 'WidgetKeys.dart';
 
 void main() => runApp(MyApp());
 
@@ -55,6 +60,7 @@ class MyHomePage extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          CollectorWatcher(),
           Text(
             'Slider sample app',
             style: Theme.of(context).textTheme.display1,
@@ -66,6 +72,130 @@ class MyHomePage extends StatelessWidget {
         ],
       )),
       // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class CollectorWatcher extends StatefulWidget {
+  @override
+  _CollectorWatcherState createState() => _CollectorWatcherState();
+}
+
+class _CollectorWatcherState extends State<CollectorWatcher> {
+  StreamSubscription<double> totalBlocPartySub;
+  int jackpot = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.shrink();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (totalBlocPartySub != null) {
+      totalBlocPartySub.cancel();
+    }
+
+//    totalBlocPartySub =
+        BlocProvider.of<SliderBloc>(context).combined.listen((double val) {
+      print("val is $val vs $jackpot");
+      if (val.toInt() == jackpot) {
+        jackpot = jackpotFunc();
+        InfoDialog.show(context, 'JACKPOT', Icons.expand_less, 'you have hit the jackpot!');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    if (totalBlocPartySub != null) {
+      totalBlocPartySub.cancel();
+    }
+  }
+}
+
+typedef int JackpotFunc();
+
+JackpotFunc jackpotFunc = () => Random().nextInt(20);
+
+
+const _BOREDER_RADIUS = Radius.circular(4);
+const _SEGMENT_PADDING = EdgeInsets.symmetric(vertical: 10.0, horizontal: 14);
+
+class InfoDialog extends StatelessWidget {
+  final String title;
+  final String message;
+  final IconData titleIcon;
+
+  static show(
+      BuildContext context,
+      String title,
+      IconData titleIcon,
+      String message,
+      ) =>
+      showDialog(
+          context: context,
+          builder: (context) {
+            return InfoDialog(
+              title: title,
+              titleIcon: titleIcon,
+              message: message,
+            );
+          });
+
+  const InfoDialog({
+    @required this.title,
+    @required this.message,
+    @required this.titleIcon,
+  });
+
+  @override
+  Widget build(context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(_BOREDER_RADIUS)),
+      titlePadding: EdgeInsets.zero,
+      title: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.only(topLeft: _BOREDER_RADIUS, topRight: _BOREDER_RADIUS),
+        ),
+        child: Padding(
+          padding: _SEGMENT_PADDING,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(child: Text(title, style: TextStyle(color: Colors.white))),
+              Icon(titleIcon, color: Colors.white, size: 22),
+            ],
+          ),
+        ),
+      ),
+      contentPadding: _SEGMENT_PADDING,
+      content: SingleChildScrollView(
+        child: Wrap(
+          runSpacing: 8,
+          children: <Widget>[
+            Container(
+              child: Text(message,
+                  key: ValueKey(WidgetKeys.infodialog),
+                  style: TextStyle(color: Colors.black)),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(top: 4),
+                child: Text("OK",
+                    style: TextStyle(color: Colors.blue),
+              )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
