@@ -1,25 +1,20 @@
 import 'package:ogurets/ogurets_core.dart';
 import 'package:ogurets/ogurets.dart';
-import 'package:ogurets_flutter/ogurets_flutter.dart';
-import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../lib/WidgetKeys.dart';
+import '../page/slider_page.dart';
 
 class JackpotStepdefs {
-  FlutterOgurets _world;
+  SliderPage _sliderPage;
 
-  JackpotStepdefs(this._world);
+  JackpotStepdefs(this._sliderPage);
 
-  @And(r'I scroll the slider')
-  void i_scroll_slider() async {
-    await _world.driver.scroll(find.byValueKey(WidgetKeys.slider), -30,0,Duration(seconds: 1));
-    await Future.delayed(Duration(seconds: 3));
-    await _world.driver.scroll(find.byValueKey(WidgetKeys.slider2),30,0,Duration(seconds: 1));
-    await Future.delayed(Duration(seconds: 3));
-    await _world.driver.scroll(find.byValueKey(WidgetKeys.slider2),60,0,Duration(seconds: 1));
-    await Future.delayed(Duration(seconds: 3));
-    await _world.driver.scroll(find.byValueKey(WidgetKeys.slider2),90,0,Duration(seconds: 1));
-    await Future.delayed(Duration(seconds: 3));
+  @When(r"I slide the sliders")
+  Future<void> i_slide_the_sliders(GherkinTable table) async {
+    await _sliderPage.slideSliders(table);
   }
 
+  @Then("I should see")
+  Future<void> i_should_see({table}) async {
+    assert(await _sliderPage.verifyBoxValues(table) == true);
+  }
 }

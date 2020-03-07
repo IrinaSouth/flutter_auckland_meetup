@@ -7,6 +7,8 @@ import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 import 'package:flutter_auckland_feb20/sliders.dart';
 
+import 'WidgetKeys.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -63,9 +65,9 @@ class MyHomePage extends StatelessWidget {
             'Slider sample app',
             style: Theme.of(context).textTheme.display1,
           ),
-          SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),),
+          SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),key: ValueKey(WidgetKeys.slider),),
           AutoSizeText('Slider2'),
-          SliderWidget(initialValue: bloc.slider2Value, valueChanged: (v) => bloc.addSlider2(v),),
+          SliderWidget(initialValue: bloc.slider2Value, valueChanged: (v) => bloc.addSlider2(v),key: ValueKey(WidgetKeys.slider2),),
           BoxesArrayWidget()
         ],
       )),
