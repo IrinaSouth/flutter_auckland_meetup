@@ -1,9 +1,20 @@
 Feature: jackpot
 
-  Scenario: sliding sliders should change box values
-    When I slide the sliders
-      | slider 1 | slider 2 |
-      | 5        | 9        |
-    Then I should see
-      | box 1 | box 2 | box 3 | box 4 |
-      | 5.0   | 6.0   | 8.0   | 1.0   |
+  Scenario Outline: sliding sliders should change box values (examples table)
+    When I slide slider 1 by <slider1>
+    And I slide slider 2 by <slider2>
+    Then I should see jackpot message "You hit the jackpot of 12!"
+    Examples:
+      | slider1 | slider2 |
+      | 10      | 2       |
+      | 5       | 7       |
+      | 6       | 6       |
+
+  Scenario Outline: sliding sliders should change box values (examples table)
+    When I slide slider 1 by <slider1>
+    And I slide slider 2 by <slider2>
+    Then I should not see jackpot message
+    Examples:
+      | slider1 | slider2 |
+      | 10      | 1       |
+      | 6       | 6       |

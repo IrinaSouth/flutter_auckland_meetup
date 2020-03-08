@@ -8,6 +8,7 @@ import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 import 'package:flutter_auckland_feb20/sliders.dart';
 
 import 'WidgetKeys.dart';
+import 'WidgetKeys.dart';
 
 void main() => runApp(MyApp());
 
@@ -65,9 +66,17 @@ class MyHomePage extends StatelessWidget {
             'Slider sample app',
             style: Theme.of(context).textTheme.display1,
           ),
-          SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),key: ValueKey(WidgetKeys.slider),),
+          SliderWidget(
+            initialValue: bloc.slider1Value,
+            valueChanged: (v) => bloc.addSliderValueToStream(v),
+            key: ValueKey(WidgetKeys.slider),
+          ),
           AutoSizeText('Slider2'),
-          SliderWidget(initialValue: bloc.slider2Value, valueChanged: (v) => bloc.addSlider2(v),key: ValueKey(WidgetKeys.slider2),),
+          SliderWidget(
+            initialValue: bloc.slider2Value,
+            valueChanged: (v) => bloc.addSlider2(v),
+            key: ValueKey(WidgetKeys.slider2),
+          ),
           BoxesArrayWidget()
         ],
       )),
@@ -82,7 +91,7 @@ class CollectorWatcher extends StatefulWidget {
 }
 
 class _CollectorWatcherState extends State<CollectorWatcher> {
-  int jackpot = 10;
+  int jackpot = jackpotFunc();
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +99,12 @@ class _CollectorWatcherState extends State<CollectorWatcher> {
       stream: BlocProvider.of<SliderBloc>(context).combined,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data is double) {
-
           if (snapshot.data.toInt() == jackpot) {
-            Widget w = AutoSizeText('You hit the jackpot of $jackpot!', style: TextStyle(fontSize: 26.0),);
+            Widget w = AutoSizeText(
+              'You hit the jackpot of $jackpot!',
+              style: TextStyle(fontSize: 26.0),
+              textKey: ValueKey(WidgetKeys.jackpotMessage),
+            );
             jackpot = jackpotFunc();
             return w;
           }
@@ -107,5 +119,3 @@ class _CollectorWatcherState extends State<CollectorWatcher> {
 typedef int JackpotFunc();
 
 JackpotFunc jackpotFunc = () => Random().nextInt(20);
-
-
