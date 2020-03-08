@@ -1,6 +1,7 @@
 import 'package:ogurets/ogurets.dart';
 import 'package:ogurets_flutter/ogurets_flutter.dart';
 
+import 'steps/DialogStepDefs.dart';
 import 'steps/JackpotStepDefs.dart';
 import 'steps/SlidersStepDefs.dart';
 
@@ -22,6 +23,7 @@ void main(args) async {
     ..step(FlutterHooks)
     ..step(SlidersStepDefs)
     ..step(JackpotStepDefs)
+    ..step(DialogStepDefs)
 
   ;
 

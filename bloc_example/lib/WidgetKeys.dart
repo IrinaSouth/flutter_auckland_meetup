@@ -13,4 +13,7 @@ class WidgetKeys {
   static const jackpotMessage = 'jackpot-message';
 
   static const infodialog = 'info-dialog';
+  static const dialogText = 'info-dialog-text';
+  static const tapHereButton = 'tap-here';
+
 }

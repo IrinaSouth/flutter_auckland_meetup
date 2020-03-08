@@ -16,6 +16,7 @@ class SliderPage {
   final slider = find.byValueKey(WidgetKeys.slider);
   final slider2 = find.byValueKey(WidgetKeys.slider2);
   final jackpotMessage = find.byValueKey(WidgetKeys.jackpotMessage);
+  final dialog = find.byValueKey(WidgetKeys.dialogText);
 
   Future<void> slideSliders(table) async {
     for (var sliderVal in table) {
@@ -61,6 +62,18 @@ class SliderPage {
     } catch (_) {
       return false;
     }
+  }
+
+  Future<String> getDialogTitle() async {
+//    return await _world.driver.runUnsynchronized(() async {
+//      return await _world.driver.getText(dialog, timeout: Duration(seconds: 5));
+//    }, timeout: Duration(seconds: 5));
+    return await _world.driver.getText(dialog);
+  }
+
+  Future<void> tapButton() async {
+    await _world.driver.tap(find.byValueKey(WidgetKeys.tapHereButton));
+
   }
 }
 

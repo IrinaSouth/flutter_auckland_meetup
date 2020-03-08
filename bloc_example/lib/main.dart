@@ -66,6 +66,13 @@ class MyHomePage extends StatelessWidget {
             'Slider sample app',
             style: Theme.of(context).textTheme.display1,
           ),
+          RaisedButton(
+            key: ValueKey(WidgetKeys.tapHereButton),
+            onPressed: () {
+              _showDialog(context);
+            },
+            child: Text("Tap here"),
+          ),
           SliderWidget(
             initialValue: bloc.slider1Value,
             valueChanged: (v) => bloc.addSliderValueToStream(v),
@@ -114,6 +121,27 @@ class _CollectorWatcherState extends State<CollectorWatcher> {
       },
     );
   }
+}
+
+Future<void> _showDialog(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        key: ValueKey(WidgetKeys.infodialog),
+        title: Text('This is an AlerDialog', key: ValueKey(WidgetKeys.dialogText),),
+        content: Text('Some dialog info'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 typedef int JackpotFunc();
