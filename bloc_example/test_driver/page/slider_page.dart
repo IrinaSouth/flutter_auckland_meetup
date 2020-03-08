@@ -65,15 +65,17 @@ class SliderPage {
   }
 
   Future<String> getDialogTitle() async {
-//    return await _world.driver.runUnsynchronized(() async {
-//      return await _world.driver.getText(dialog, timeout: Duration(seconds: 5));
-//    }, timeout: Duration(seconds: 5));
-    return await _world.driver.getText(dialog);
+    return await _world.driver.runUnsynchronized(
+      () async {
+        return await _world.driver.getText(dialog);
+      },
+    );
+    // we can't call getText directly without runUnsynchronized as there is an animation in the dialog box
+    //return await _world.driver.getText(dialog, timeout: Duration(seconds: 3));
   }
 
   Future<void> tapButton() async {
     await _world.driver.tap(find.byValueKey(WidgetKeys.tapHereButton));
-
   }
 }
 

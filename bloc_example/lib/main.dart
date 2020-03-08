@@ -9,6 +9,7 @@ import 'package:flutter_auckland_feb20/sliders.dart';
 
 import 'WidgetKeys.dart';
 import 'WidgetKeys.dart';
+import 'animated_box.dart';
 
 void main() => runApp(MyApp());
 
@@ -130,7 +131,7 @@ Future<void> _showDialog(BuildContext context) {
       return AlertDialog(
         key: ValueKey(WidgetKeys.infodialog),
         title: Text('This is an AlerDialog', key: ValueKey(WidgetKeys.dialogText),),
-        content: Text('Some dialog info'),
+        content: AnimatedBox(),
         actions: <Widget>[
           FlatButton(
             child: Text('Ok'),

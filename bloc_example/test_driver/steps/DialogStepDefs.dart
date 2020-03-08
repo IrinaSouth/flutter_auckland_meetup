@@ -13,8 +13,8 @@ class DialogStepDefs {
     await _sliderPage.tapButton();
   }
 
-  @When(r"I should see a dialog")
-  Future<void> i_should_see_dialog() async {
-    assert(await _sliderPage.getDialogTitle() == 'This is an AlerDialog');
+  @When(r"I should see a dialog with title {string}")
+  Future<void> i_should_see_dialog_with_title(String title) async {
+    assert(await _sliderPage.getDialogTitle() == title);
   }
 }
