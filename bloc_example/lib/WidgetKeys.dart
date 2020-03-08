@@ -15,5 +15,6 @@ class WidgetKeys {
   static const infodialog = 'info-dialog';
   static const dialogText = 'info-dialog-text';
   static const tapHereButton = 'tap-here';
+  static const webButton = 'web-button';
 
 }

@@ -4,8 +4,7 @@ import 'package:ogurets_flutter/ogurets_flutter.dart';
 import 'steps/DialogStepDefs.dart';
 import 'steps/JackpotStepDefs.dart';
 import 'steps/SlidersStepDefs.dart';
-
-
+import 'steps/WebviewStepDefs.dart';
 
 // THIS FILE IS GENERATED - it will be overwritten on each run.
 // If you wish to use one, please just make a copy and use that.
@@ -24,8 +23,7 @@ void main(args) async {
     ..step(SlidersStepDefs)
     ..step(JackpotStepDefs)
     ..step(DialogStepDefs)
-
-  ;
+    ..step(WebviewStepDefs);
 
   await def.run();
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 import 'package:flutter_auckland_feb20/sliders.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'WidgetKeys.dart';
 import 'WidgetKeys.dart';
@@ -31,6 +32,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
+      routes: {
+        '/web': (_) => WebviewScaffold(
+              url: "https://flutter.dev",
+              appBar: new AppBar(
+                title: const Text('Widget Webview'),
+              ),
+            )
+      },
       home: BlocProvider<SliderBloc>(
         creator: (_context, _bag) {
           return SliderBloc();
@@ -73,6 +82,13 @@ class MyHomePage extends StatelessWidget {
               _showDialog(context);
             },
             child: Text("Tap here"),
+          ),
+          RaisedButton(
+            key: ValueKey(WidgetKeys.webButton),
+            onPressed: () {
+              _opennewpage(context);
+            },
+            child: Text("Open webview"),
           ),
           SliderWidget(
             initialValue: bloc.slider1Value,
@@ -130,7 +146,10 @@ Future<void> _showDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         key: ValueKey(WidgetKeys.infodialog),
-        title: Text('This is an AlerDialog', key: ValueKey(WidgetKeys.dialogText),),
+        title: Text(
+          'This is an AlerDialog',
+          key: ValueKey(WidgetKeys.dialogText),
+        ),
         content: AnimatedBox(),
         actions: <Widget>[
           FlatButton(
@@ -143,6 +162,10 @@ Future<void> _showDialog(BuildContext context) {
       );
     },
   );
+}
+
+void _opennewpage(BuildContext context) {
+  Navigator.of(context).pushNamed('/web');
 }
 
 typedef int JackpotFunc();

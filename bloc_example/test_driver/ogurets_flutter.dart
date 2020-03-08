@@ -1,4 +1,5 @@
 import "package:flutter_driver/driver_extension.dart";
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import "../lib/main.dart" as app;
 
 // THIS FILE IS GENERATED - it will be overwritten on each run.
@@ -10,11 +11,23 @@ import "../lib/main.dart" as app;
 // https://github.com/dart-ogurets/OguretsFlutter (for ogurets_flutter)
 // https://github.com/dart-ogurets/OguretsIntellij (for the Jetbrains IntelliJ plugin)
 void main() {
-  enableFlutterDriverExtension();
+  Future<String> dataHandler(String msg) async {
+    switch (msg) {
+      case "getWebViewUrl":
+        {
+          return await FlutterWebviewPlugin().evalJavascript('document.URL');
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  enableFlutterDriverExtension(handler: dataHandler);
   app.jackpotFunc = jackpotFunc;
   app.main();
 }
 
 typedef int JackpotFunc();
-JackpotFunc jackpotFunc = () => 12;
 
+JackpotFunc jackpotFunc = () => 12;

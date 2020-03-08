@@ -17,6 +17,8 @@ class SliderPage {
   final slider2 = find.byValueKey(WidgetKeys.slider2);
   final jackpotMessage = find.byValueKey(WidgetKeys.jackpotMessage);
   final dialog = find.byValueKey(WidgetKeys.dialogText);
+  final taphereButton = find.byValueKey(WidgetKeys.tapHereButton);
+  final webviewButton = find.byValueKey(WidgetKeys.webButton);
 
   Future<void> slideSliders(table) async {
     for (var sliderVal in table) {
@@ -75,7 +77,11 @@ class SliderPage {
   }
 
   Future<void> tapButton() async {
-    await _world.driver.tap(find.byValueKey(WidgetKeys.tapHereButton));
+    await _world.driver.tap(taphereButton);
+  }
+
+  Future<void> openWebview() async {
+    await _world.driver.tap(webviewButton);
   }
 }
 
