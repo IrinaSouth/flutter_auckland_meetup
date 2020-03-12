@@ -10,5 +10,11 @@ class WidgetKeys {
 
   static const slider2 = 'slider2';
 
+  static const jackpotMessage = 'jackpot-message';
+
   static const infodialog = 'info-dialog';
+  static const dialogText = 'info-dialog-text';
+  static const tapHereButton = 'tap-here';
+  static const webButton = 'web-button';
+
 }
