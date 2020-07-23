@@ -29,17 +29,18 @@ class SlidersStepDefs {
   Future<void> box_value_should(String boxNumber, String boxVal) async {
     switch (boxNumber) {
       case '1':
-        assert(await _sliderPage.getBox1Value() == boxVal);
+        final box1Val = await _sliderPage.getBox1Value();
+        assert(box1Val == boxVal, 'box 1 have value: $box1Val but it is expected to be $boxVal');
         break;
       case '2':
-        assert(await _sliderPage.getBox2Value() == boxVal);
-        break;
+        final box2Val = await _sliderPage.getBox2Value();
+        assert(box2Val == boxVal, 'box 2 have value: $box2Val but it is expected to be $boxVal');        break;
       case '3':
-        assert(await _sliderPage.getBox3Value() == boxVal);
-        break;
+        final box3Val = await _sliderPage.getBox3Value();
+        assert(box3Val == boxVal, 'box 3 have value: $box3Val but it is expected to be $boxVal');        break;
       case '4':
-        assert(await _sliderPage.getBox4Value() == boxVal);
-        break;
+        final box4Val = await _sliderPage.getBox4Value();
+        assert(box4Val == boxVal, 'box 4 have value: $box4Val but it is expected to be $boxVal');        break;
     }
   }
 

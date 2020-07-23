@@ -8,7 +8,6 @@ Feature: jackpot
       | slider1 | slider2 |
       | 10      | 2       |
       | 5       | 7       |
-      | 6       | 6       |
 
   Scenario Outline: sliding sliders should change box values (examples table)
     When I slide slider 1 by <slider1>

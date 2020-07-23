@@ -17,7 +17,8 @@ class WebviewStepDefs {
 
   @When(r"the url should be {string}")
   Future<void> url_should_be(String url) async {
-    await Future.delayed(Duration(seconds: 3));
+    //TODO: add retry logic
+    await Future.delayed(Duration(seconds: 10));
     final actualUrl = await _world.driver.requestData("getWebViewUrl");
     assert(url == actualUrl, 'actual url: $actualUrl is not the same as expected url: $url');
   }
