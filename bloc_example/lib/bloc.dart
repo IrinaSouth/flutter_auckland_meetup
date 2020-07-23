@@ -11,6 +11,7 @@ class SliderBloc implements Bloc {
   get box2 => _sliderStream.map((s) => s + 1);
   get box3 => _slider2Stream.map((s) => s > 0 ? s - 1 : 10.0);
   get box4 => _slider2Stream.map((s) => 10 - s);
+  get combined => CombineLatestStream.combine2(_sliderStream, _slider2Stream, (a, b) => (a??0) + (b??0));
 
   addSliderValueToStream(double value) {
     _sliderStream.add(value);

@@ -1,8 +1,16 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auckland_feb20/bloc.dart';
 import 'package:flutter_auckland_feb20/boxes_array_widget.dart';
 import 'package:flutter_auckland_feb20/sliders.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
+import 'WidgetKeys.dart';
+import 'WidgetKeys.dart';
+import 'animated_box.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +32,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
+      routes: {
+        '/web': (_) => WebviewScaffold(
+              url: "https://flutter.dev",
+              appBar: new AppBar(
+                title: const Text('Widget Webview'),
+              ),
+            )
+      },
       home: BlocProvider<SliderBloc>(
         creator: (_context, _bag) {
           return SliderBloc();
@@ -55,13 +71,36 @@ class MyHomePage extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text(
+          CollectorWatcher(),
+          AutoSizeText(
             'Slider sample app',
             style: Theme.of(context).textTheme.display1,
           ),
-          SliderWidget(initialValue: bloc.slider1Value, valueChanged: (v) => bloc.addSliderValueToStream(v),),
-          Text('Slider2'),
-          SliderWidget(initialValue: bloc.slider2Value, valueChanged: (v) => bloc.addSlider2(v),),
+          RaisedButton(
+            key: ValueKey(WidgetKeys.tapHereButton),
+            onPressed: () {
+              _showDialog(context);
+            },
+            child: Text("Tap here"),
+          ),
+          RaisedButton(
+            key: ValueKey(WidgetKeys.webButton),
+            onPressed: () {
+              _opennewpage(context);
+            },
+            child: Text("Open webview"),
+          ),
+          SliderWidget(
+            initialValue: bloc.slider1Value,
+            valueChanged: (v) => bloc.addSliderValueToStream(v),
+            key: ValueKey(WidgetKeys.slider),
+          ),
+          AutoSizeText('Slider2'),
+          SliderWidget(
+            initialValue: bloc.slider2Value,
+            valueChanged: (v) => bloc.addSlider2(v),
+            key: ValueKey(WidgetKeys.slider2),
+          ),
           BoxesArrayWidget()
         ],
       )),
@@ -69,3 +108,66 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+class CollectorWatcher extends StatefulWidget {
+  @override
+  _CollectorWatcherState createState() => _CollectorWatcherState();
+}
+
+class _CollectorWatcherState extends State<CollectorWatcher> {
+  int jackpot = jackpotFunc();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<dynamic>(
+      stream: BlocProvider.of<SliderBloc>(context).combined,
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data is double) {
+          if (snapshot.data.toInt() == jackpot) {
+            Widget w = AutoSizeText(
+              'You hit the jackpot of $jackpot!',
+              style: TextStyle(fontSize: 26.0),
+              textKey: ValueKey(WidgetKeys.jackpotMessage),
+            );
+            jackpot = jackpotFunc();
+            return w;
+          }
+        }
+
+        return SizedBox.shrink();
+      },
+    );
+  }
+}
+
+Future<void> _showDialog(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        key: ValueKey(WidgetKeys.infodialog),
+        title: Text(
+          'This is an AlerDialog',
+          key: ValueKey(WidgetKeys.dialogText),
+        ),
+        content: AnimatedBox(),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _opennewpage(BuildContext context) {
+  Navigator.of(context).pushNamed('/web');
+}
+
+typedef int JackpotFunc();
+
+JackpotFunc jackpotFunc = () => Random().nextInt(20);

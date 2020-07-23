@@ -32,7 +32,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<SliderBloc>(context);
+    final bloc = Provider.of<SliderBloc>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
