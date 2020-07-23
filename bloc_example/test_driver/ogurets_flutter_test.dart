@@ -1,4 +1,5 @@
 import 'package:ogurets/ogurets.dart';
+import 'package:ogurets_flutter/FlutterOguretsHelperStepdefs.dart';
 import 'package:ogurets_flutter/ogurets_flutter.dart';
 
 import 'steps/DialogStepDefs.dart';
@@ -16,14 +17,15 @@ import 'steps/WebviewStepDefs.dart';
 // https://github.com/dart-ogurets/OguretsIntellij (for the Jetbrains IntelliJ plugin)
 void main(args) async {
   var def = new OguretsOpts()
-    ..feature('test_driver/features/jackpot.feature')
+    ..feature('test_driver/features')
     ..instance(FlutterOgurets())
     ..debug()
     ..step(FlutterHooks)
     ..step(SlidersStepDefs)
     ..step(JackpotStepDefs)
     ..step(DialogStepDefs)
-    ..step(WebviewStepDefs);
+    ..step(WebviewStepDefs)
+    ..step(FlutterOguretsHelperStepdefs);
 
   await def.run();
 }

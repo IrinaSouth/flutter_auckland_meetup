@@ -9,16 +9,24 @@ class SliderPage {
 
   SliderPage(this._world);
 
+  // sliders
+  final slider = find.byValueKey(WidgetKeys.slider);
+  final slider2 = find.byValueKey(WidgetKeys.slider2);
+
+  // boxes
   final box1 = find.byValueKey('${WidgetKeys.box1}-text');
   final box2 = find.byValueKey('${WidgetKeys.box2}-text');
   final box3 = find.byValueKey('${WidgetKeys.box3}-text');
   final box4 = find.byValueKey('${WidgetKeys.box4}-text');
-  final slider = find.byValueKey(WidgetKeys.slider);
-  final slider2 = find.byValueKey(WidgetKeys.slider2);
-  final jackpotMessage = find.byValueKey(WidgetKeys.jackpotMessage);
-  final dialog = find.byValueKey(WidgetKeys.dialogText);
+
+  // buttons
   final taphereButton = find.byValueKey(WidgetKeys.tapHereButton);
   final webviewButton = find.byValueKey(WidgetKeys.webButton);
+
+  // texts
+  final jackpotMessage = find.byValueKey(WidgetKeys.jackpotMessage);
+  final dialog = find.byValueKey(WidgetKeys.dialogText);
+
 
   Future<void> slideSliders(table) async {
     for (var sliderVal in table) {
@@ -30,11 +38,13 @@ class SliderPage {
   }
 
   Future<void> slideSlider1By(int increment) async {
-    await _world.driver.scroll(slider, getOffsetValue(increment), 0, Duration(seconds: 1));
+    final offset = await getOffsetValue(increment);
+    await _world.driver.scroll(slider, offset, 0, Duration(seconds: 1));
   }
 
   Future<void> slideSlider2By(int increment) async {
-    await _world.driver.scroll(slider2, getOffsetValue(increment), 0, Duration(seconds: 1));
+    final offset = await getOffsetValue(increment);
+    await _world.driver.scroll(slider2, offset, 0, Duration(seconds: 1));
   }
 
   Future<String> getBox1Value() async {
@@ -67,13 +77,13 @@ class SliderPage {
   }
 
   Future<String> getDialogTitle() async {
+    // we can't call getText directly without runUnsynchronized as there is an animation in the dialog box
+    //return await _world.driver.getText(dialog, timeout: Duration(seconds: 3));
     return await _world.driver.runUnsynchronized(
       () async {
         return await _world.driver.getText(dialog);
       },
     );
-    // we can't call getText directly without runUnsynchronized as there is an animation in the dialog box
-    //return await _world.driver.getText(dialog, timeout: Duration(seconds: 3));
   }
 
   Future<void> tapButton() async {
@@ -83,8 +93,14 @@ class SliderPage {
   Future<void> openWebview() async {
     await _world.driver.tap(webviewButton);
   }
+
+
+  Future<double> getOffsetValue(int increment) async {
+    final left = await _world.driver.getTopLeft(slider);
+    final right = await _world.driver.getTopRight(slider);
+    final perIncrement = (right.dx - left.dx)/10;
+    final lessIncrement = perIncrement - 5; // a bit less so we don't over scroll
+    return ((increment - 5) * lessIncrement).toDouble();
+  }
 }
 
-getOffsetValue(int increment) {
-  return ((increment - 5) * 30).toDouble();
-}
